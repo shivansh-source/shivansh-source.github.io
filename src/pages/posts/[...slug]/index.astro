@@ -138,7 +138,9 @@ const ogImage = ogImageUrl
       id="article"
       class:list={[
         "mt-8 w-full",
-        "app-prose max-w-app",
+        // Article body stays a comfortable reading width, centered inside
+        // the wider page shell (app-layout) — not stretched to match it.
+        "app-prose max-w-prose mx-auto",
         "prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)",
       ]}
     >

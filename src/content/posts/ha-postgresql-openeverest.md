@@ -3,6 +3,7 @@ title: "High Availability PostgreSQL: From Zero to Cluster"
 description: "A walkthrough of deploying a three-node PostgreSQL cluster on Kubernetes with OpenEverest v2 and the Percona provider, then chaos-testing failover by killing the primary pod and its volume. Originally published on the OpenEverest blog."
 pubDatetime: 2026-08-20T00:00:00Z
 draft: false
+featured: true
 tags:
   - postgresql
   - kubernetes

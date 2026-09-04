@@ -23,6 +23,32 @@ const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 const homePath = getRelativeLocaleUrl(locale, "");
+
+const contributions = [
+  {
+    project: "OpenEverest",
+    title:
+      "Fixed the Postgres provider to watch Instances across all namespaces",
+    href: "https://github.com/openeverest/provider-percona-postgresql/pull/21",
+  },
+  {
+    project: "KubeStellar",
+    title:
+      "Generalized E2E tests to run against released KubeFlex artifacts",
+    href: "https://github.com/kubestellar/kubeflex/pull/594",
+  },
+  {
+    project: "Open Cluster Management",
+    title: "Added TLS profile configuration support for spoke cluster agents",
+    href: "https://github.com/open-cluster-management-io/ocm/pull/1486",
+  },
+  {
+    project: "kro",
+    title:
+      "KREP-008: design proposal for resource-backed includeWhen evaluation",
+    href: "https://github.com/kubernetes-sigs/kro/pull/933",
+  },
+];
 ---
 
 <Layout>
@@ -67,6 +93,40 @@ const homePath = getRelativeLocaleUrl(locale, "");
         />
         <span class="sr-only">RSS Feed</span>
       </a>
+    </section>
+
+    <section
+      id="contributions"
+      class="border-border border-b pt-8 pb-6"
+    >
+      <h2 class="text-2xl font-semibold tracking-wide">
+        Recent contributions
+      </h2>
+      <ul>
+        {contributions.map(c => (
+          <li class="my-6">
+            <a
+              href={c.href}
+              target="_blank"
+              rel="noopener"
+              class:list={[
+                "text-accent inline-block text-lg font-medium",
+                "decoration-dashed underline-offset-4 hover:underline",
+                "focus-visible:no-underline focus-visible:underline-offset-0",
+              ]}
+            >
+              {c.title}
+            </a>
+            <p class="text-muted-foreground text-sm">{c.project}</p>
+          </li>
+        ))}
+      </ul>
+      <LinkButton
+        href={getRelativeLocaleUrl(locale, "about")}
+        class="hover:text-accent underline decoration-dashed underline-offset-4"
+      >
+        See all contributions on the About page
+      </LinkButton>
     </section>
 
     {
