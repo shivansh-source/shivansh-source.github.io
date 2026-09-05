@@ -7,8 +7,8 @@
 
 @layer base {
   html {
-    /* Base font-size at 75% — Tailwind's rem-based spacing/type scale follows. */
-    font-size: 75%;
+    /* Base font-size at 85% — Tailwind's rem-based spacing/type scale follows. */
+    font-size: 85%;
   }
   * {
     @apply border-border outline-accent/75;
