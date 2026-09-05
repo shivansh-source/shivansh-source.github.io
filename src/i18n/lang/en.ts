@@ -6,6 +6,7 @@ export default {
     posts: "Posts",
     tags: "Tags",
     about: "About",
+    contributions: "Contributions",
     archives: "Archives",
     search: "Search",
   },
@@ -52,6 +53,9 @@ export default {
 
     searchTitle: "Search",
     searchDesc: "Search any article ...",
+
+    contributionsTitle: "Contributions",
+    contributionsDesc: "Open-source work across the CNCF ecosystem.",
   },
   a11y: {
     skipToContent: "Skip to content",

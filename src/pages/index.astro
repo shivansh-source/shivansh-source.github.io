@@ -10,6 +10,7 @@ import Card from "@/components/Card.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { useTranslations } from "@/i18n";
+import { highlightedContributions } from "@/data/contributions";
 import config from "@/config";
 
 const { posts: postsConfig } = config;
@@ -23,29 +24,33 @@ const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 const homePath = getRelativeLocaleUrl(locale, "");
 
-const contributions = [
+const projects = [
   {
-    project: "OpenEverest",
-    title:
-      "Fixed the Postgres provider to watch Instances across all namespaces",
-    href: "https://github.com/openeverest/provider-percona-postgresql/pull/21",
+    name: "GenSec",
+    tagline: "Go · vulnerability scanning + LLM-driven remediation",
+    href: "https://github.com/shivansh-source/gensec",
+    description:
+      "Scans Go repositories for vulnerabilities (Semgrep, Gitleaks, Trivy, plus a built-in pattern matcher), uses an LLM to triage findings in context, and opens a PR with a generated fix — for teams who want vulnerabilities remediated, not just listed. Early-stage and opinionated; a human still reviews and merges every PR.",
+  },
+];
+
+const now = [
+  {
+    title: "Building GenSec — an LLM-assisted vulnerability scanner and patcher for Go",
+    href: "https://github.com/shivansh-source/gensec",
   },
   {
-    project: "KubeStellar",
-    title:
-      "Generalized E2E tests to run against released KubeFlex artifacts",
-    href: "https://github.com/kubestellar/kubeflex/pull/594",
+    title: "OpenEverest: a curated LLM catalog for the KubeAI provider",
+    href: "https://github.com/openeverest/provider-kubeai/pull/8",
   },
   {
-    project: "Open Cluster Management",
-    title: "Added TLS profile configuration support for spoke cluster agents",
-    href: "https://github.com/open-cluster-management-io/ocm/pull/1486",
+    title:
+      "OpenEverest: clickhouse-backup based backup/restore support for the ClickHouse provider",
+    href: "https://github.com/openeverest/provider-altinity-clickhouse/pull/22",
   },
   {
-    project: "kro",
-    title:
-      "KREP-008: design proposal for resource-backed includeWhen evaluation",
-    href: "https://github.com/kubernetes-sigs/kro/pull/933",
+    title: "OpenEverest: a couple of Helm chart fixes under review",
+    href: "https://github.com/openeverest/helm-charts/pull/100",
   },
 ];
 ---
@@ -60,15 +65,59 @@ const contributions = [
   >
     <div class="flex flex-col gap-8 pt-6 lg:flex-row lg:items-start lg:gap-12">
       <div class="min-w-0 flex-1">
+        <section id="projects" class="border-border border-b pb-6">
+          <h2 class="text-2xl font-semibold tracking-wide">Projects</h2>
+          <ul>
+            {projects.map(p => (
+              <li class="my-6">
+                <a
+                  href={p.href}
+                  target="_blank"
+                  rel="noopener"
+                  class:list={[
+                    "text-accent inline-block text-lg font-medium",
+                    "decoration-dashed underline-offset-4 hover:underline",
+                    "focus-visible:no-underline focus-visible:underline-offset-0",
+                  ]}
+                >
+                  {p.name}
+                </a>
+                <p class="text-muted-foreground text-sm">{p.tagline}</p>
+                <p class="mt-1">{p.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section id="now" class="border-border border-b pt-8 pb-6">
+          <h2 class="text-2xl font-semibold tracking-wide">
+            Currently working on
+          </h2>
+          <ul class="mt-4 space-y-2">
+            {now.map(n => (
+              <li>
+                <a
+                  href={n.href}
+                  target="_blank"
+                  rel="noopener"
+                  class="text-accent decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline"
+                >
+                  {n.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <section
           id="contributions"
-          class="border-border border-b pb-6"
+          class="border-border border-b pt-8 pb-6"
         >
           <h2 class="text-2xl font-semibold tracking-wide">
             Recent contributions
           </h2>
           <ul>
-            {contributions.map(c => (
+            {highlightedContributions.map(c => (
               <li class="my-6">
                 <a
                   href={c.href}
@@ -87,10 +136,10 @@ const contributions = [
             ))}
           </ul>
           <LinkButton
-            href={getRelativeLocaleUrl(locale, "about")}
+            href={getRelativeLocaleUrl(locale, "contributions")}
             class="hover:text-accent underline decoration-dashed underline-offset-4"
           >
-            See all contributions on the About page
+            See all contributions
           </LinkButton>
         </section>
 
