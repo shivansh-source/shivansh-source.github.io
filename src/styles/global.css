@@ -28,7 +28,7 @@
 
 /* Shell width: header, footer, post lists, contributions, etc. */
 @utility max-w-app {
-  @apply max-w-6xl;
+  max-width: 1600px;
 }
 
 @utility app-layout {
