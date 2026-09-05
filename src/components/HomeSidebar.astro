@@ -1,0 +1,83 @@
+---
+// Homepage-only sidebar: identity blurb, subscribe, social, disclaimer.
+// Mirrors the classic personal-blog-sidebar pattern, filled with real info.
+const linkClass = [
+  "text-accent",
+  "decoration-dashed underline-offset-4 hover:underline",
+  "focus-visible:no-underline focus-visible:underline-offset-0",
+].join(" ");
+---
+
+<aside class="lg:w-64 lg:shrink-0">
+  <div class="border-border border-b pb-6 mb-6">
+    <h2 class="text-lg font-semibold">Shivansh Sinha</h2>
+    <p class="text-muted-foreground mt-1 text-sm">
+      Cloud-native engineer and CNCF contributor. Notes on infrastructure and
+      AI systems.
+    </p>
+  </div>
+
+  <div class="border-border border-b pb-6 mb-6">
+    <h2 class="text-lg font-semibold">Subscribe</h2>
+    <a
+      target="_blank"
+      href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
+      class:list={["mt-1 inline-block text-sm", linkClass]}
+    >
+      RSS Feed
+    </a>
+  </div>
+
+  <div class="border-border border-b pb-6 mb-6">
+    <h2 class="text-lg font-semibold">Social</h2>
+    <ul class="mt-1 space-y-1 text-sm">
+      <li>
+        GitHub:{" "}
+        <a
+          href="https://github.com/shivansh-source"
+          target="_blank"
+          rel="noopener"
+          class:list={linkClass}
+        >
+          shivansh-source
+        </a>
+      </li>
+      <li>
+        LinkedIn:{" "}
+        <a
+          href="https://www.linkedin.com/in/shivansh-sinha-167304307/"
+          target="_blank"
+          rel="noopener"
+          class:list={linkClass}
+        >
+          shivansh-sinha
+        </a>
+      </li>
+      <li>
+        X:{" "}
+        <a
+          href="https://x.com/SSinha11233"
+          target="_blank"
+          rel="noopener"
+          class:list={linkClass}
+        >
+          @SSinha11233
+        </a>
+      </li>
+      <li>
+        Mail:{" "}
+        <a
+          href="mailto:shivansh976053@gmail.com"
+          class:list={linkClass}
+        >
+          shivansh976053@gmail.com
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <p class="text-muted-foreground text-xs">
+    This is my personal website. Views expressed here are my own and don't
+    reflect those of any employer.
+  </p>
+</aside>

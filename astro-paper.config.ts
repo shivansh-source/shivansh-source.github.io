@@ -34,6 +34,7 @@ export default defineAstroPaperConfig({
       name: "linkedin",
       url: "https://www.linkedin.com/in/shivansh-sinha-167304307/",
     },
+    { name: "x", url: "https://x.com/SSinha11233" },
     { name: "mail", url: "mailto:shivansh976053@gmail.com" },
   ],
   shareLinks: [
