@@ -28,11 +28,11 @@
 
 /* Shell width: header, footer, post lists, contributions, etc. */
 @utility max-w-app {
-  max-width: 1600px;
+  max-width: 1400px;
 }
 
 @utility app-layout {
-  @apply max-w-app mx-auto w-full px-4;
+  @apply max-w-app mx-auto w-full px-6 lg:px-10;
 }
 
 @utility active-nav {
