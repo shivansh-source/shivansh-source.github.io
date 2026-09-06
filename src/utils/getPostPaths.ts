@@ -1,4 +1,5 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
+import type { CollectionEntry } from "astro:content";
 import { BLOG_PATH } from "@/content.config";
 import { slugifyStr } from "./slugify";
 import config from "@/config";
@@ -49,4 +50,35 @@ export function getPostUrl(
   locale: string | undefined = config.site.lang
 ): string {
   return getRelativeLocaleUrl(locale, `posts/${getPostSlugPath(id, filePath)}`);
+}
+
+/**
+ * Resolves the same OG image URL used for a post's `<meta property="og:image">`
+ * — a manually set `ogImage`, or (when `dynamicOgImage` is enabled) the
+ * generated `/posts/<slug>/index.png` — so it can also be rendered visibly
+ * as a cover image, e.g. on the post page or in a listing card.
+ */
+export function getPostOgImageUrl(
+  post: CollectionEntry<"posts">,
+  origin: string,
+  locale: string | undefined = config.site.lang
+): string | undefined {
+  const { ogImage } = post.data;
+
+  let ogImageUrl: string | undefined;
+  if (typeof ogImage === "string") {
+    ogImageUrl = ogImage;
+  } else if (ogImage?.src) {
+    ogImageUrl = ogImage.src;
+  }
+
+  if (!ogImageUrl && config.features.dynamicOgImage) {
+    const postUrl = getPostUrl(post.id, post.filePath, locale).replace(
+      /\/+$/,
+      ""
+    );
+    ogImageUrl = `${postUrl}/index.png`;
+  }
+
+  return ogImageUrl ? new URL(ogImageUrl, origin).href : undefined;
 }

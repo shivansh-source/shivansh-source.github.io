@@ -6,10 +6,6 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @layer base {
-  html {
-    /* Base font-size at 85% — Tailwind's rem-based spacing/type scale follows. */
-    font-size: 85%;
-  }
   * {
     @apply border-border outline-accent/75;
     scrollbar-width: auto;
@@ -37,6 +33,16 @@
 
 @utility active-nav {
   @apply underline decoration-wavy decoration-2 underline-offset-8;
+}
+
+/*
+ * Fixed-width reading column for article title/byline/cover-image/body.
+ * A plain pixel value on purpose — `max-w-prose` (65ch) computes differently
+ * per element depending on THAT element's own font-size, so a bigger title
+ * and a smaller body "65ch" aren't actually the same width, and drift apart.
+ */
+@utility max-w-article {
+  max-width: 1100px;
 }
 
 :target {

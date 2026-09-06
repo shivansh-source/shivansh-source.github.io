@@ -6,9 +6,16 @@ type Props = {
   pageTitle: string | [string, string];
   pageDesc?: string;
   class?: string;
+  /**
+   * Use the narrow reading-column width (max-w-article) for the whole page
+   * — title included — instead of the wide multi-column shell (app-layout).
+   * For single-column prose pages (About) where there's nothing meant to
+   * sit beside the content, so the wide shell would just leave dead space.
+   */
+  narrow?: boolean;
 };
 
-const { pageTitle, pageDesc, class: className } = Astro.props;
+const { pageTitle, pageDesc, class: className, narrow = false } = Astro.props;
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const backUrl = config.features.showBackButton
@@ -16,7 +23,14 @@ const backUrl = config.features.showBackButton
   : getRelativeLocaleUrl(locale, "");
 ---
 
-<main data-backUrl={backUrl} id="main-content" class="app-layout pb-4">
+<main
+  data-backUrl={backUrl}
+  id="main-content"
+  class:list={[
+    narrow ? "max-w-article mx-auto w-full px-6 lg:px-10" : "app-layout",
+    "pb-4",
+  ]}
+>
   <h1 class="text-2xl font-semibold sm:text-3xl">{pageTitle}</h1>
   <p class="mt-2 mb-6 italic">{pageDesc}</p>
   <div class:list={[className]}>
