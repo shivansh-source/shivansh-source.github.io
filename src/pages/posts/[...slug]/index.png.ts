@@ -6,24 +6,40 @@ import sharp from "sharp";
 import { getPostSlug } from "@/utils/getPostPaths";
 import config from "@/config";
 
+// Module-level cache: without it, every request to this route (each one a
+// fresh SSR invocation in `astro dev`, and — since this same process handles
+// every post during `astro build` — every post at build time too) would
+// re-fetch the same three font files over the network from scratch. That's
+// the actual cause of "PNG is slow to load": not image size, but a handful
+// of avoidable round-trips to Google Fonts on every single request.
+const fontCache = new Map<string, Promise<ArrayBuffer>>();
+
 // Fetches a static font file for a Google Font family/weight. The CSS API
 // returns one @font-face block per language subset (cyrillic, greek, latin,
 // ...); Satori only needs the "latin" one, and it accepts woff/woff2/ttf/otf
 // directly, so no user-agent trick is needed to force a particular format.
-async function fetchGoogleFont(
-  family: string,
-  weight: number
-): Promise<ArrayBuffer> {
-  const cssUrl = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(family)}:wght@${weight}&display=swap`;
-  const css = await fetch(cssUrl).then(res => res.text());
+function fetchGoogleFont(family: string, weight: number): Promise<ArrayBuffer> {
+  const cacheKey = `${family}:${weight}`;
+  const cached = fontCache.get(cacheKey);
+  if (cached) return cached;
 
-  const latinBlock = css.match(/\/\* latin \*\/\s*@font-face\s*{[^}]*}/);
-  const urlMatch = (latinBlock?.[0] ?? css).match(/src: url\((.+?)\)/);
-  if (!urlMatch) {
-    throw new Error(`Could not resolve font file for ${family} ${weight}`);
-  }
+  const promise = (async () => {
+    const cssUrl = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(family)}:wght@${weight}&display=swap`;
+    const css = await fetch(cssUrl).then(res => res.text());
 
-  return fetch(urlMatch[1]).then(res => res.arrayBuffer());
+    const latinBlock = css.match(/\/\* latin \*\/\s*@font-face\s*{[^}]*}/);
+    const urlMatch = (latinBlock?.[0] ?? css).match(/src: url\((.+?)\)/);
+    if (!urlMatch) {
+      throw new Error(`Could not resolve font file for ${family} ${weight}`);
+    }
+
+    return fetch(urlMatch[1]).then(res => res.arrayBuffer());
+  })();
+
+  // Don't cache a failed fetch — let the next request retry from scratch.
+  promise.catch(() => fontCache.delete(cacheKey));
+  fontCache.set(cacheKey, promise);
+  return promise;
 }
 
 async function renderFieldReportOgImage(

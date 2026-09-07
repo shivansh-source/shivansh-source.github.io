@@ -10,7 +10,6 @@ import Card from "@/components/Card.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { useTranslations } from "@/i18n";
-import { highlightedContributions } from "@/data/contributions";
 import config from "@/config";
 
 const { posts: postsConfig } = config;
@@ -24,33 +23,44 @@ const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 const homePath = getRelativeLocaleUrl(locale, "");
 
-const projects = [
+// One curated list, not two overlapping ones — mixes in-progress work with
+// recent merged contributions, same format each time: repo, what, why.
+const nowAndRecent = [
   {
-    name: "GenSec",
-    tagline: "Go · vulnerability scanning + LLM-driven remediation",
-    href: "https://github.com/shivansh-source/gensec",
-    description:
-      "Scans Go repositories for vulnerabilities (Semgrep, Gitleaks, Trivy, plus a built-in pattern matcher), uses an LLM to triage findings in context, and opens a PR with a generated fix — for teams who want vulnerabilities remediated, not just listed. Early-stage and opinionated; a human still reviews and merges every PR.",
-  },
-];
-
-const now = [
-  {
-    title: "Building GenSec — an LLM-assisted vulnerability scanner and patcher for Go",
+    repo: "GenSec",
+    what: "Building an LLM-assisted vulnerability scanner and patcher for Go",
+    why: "closing the gap between finding a vulnerability and actually shipping the fix",
     href: "https://github.com/shivansh-source/gensec",
   },
   {
-    title: "OpenEverest: a curated LLM catalog for the KubeAI provider",
+    repo: "OpenEverest",
+    what: "Building a curated LLM catalog for the KubeAI provider",
+    why: "so picking a supported model doesn't mean hand-writing an InstancePreset spec",
     href: "https://github.com/openeverest/provider-kubeai/pull/8",
   },
   {
-    title:
-      "OpenEverest: clickhouse-backup based backup/restore support for the ClickHouse provider",
-    href: "https://github.com/openeverest/provider-altinity-clickhouse/pull/22",
+    repo: "OpenEverest",
+    what: "Fixed the Postgres provider to watch Instances across all namespaces",
+    why: "instances outside the default namespace were silently never reconciled",
+    href: "https://github.com/openeverest/provider-percona-postgresql/pull/21",
   },
   {
-    title: "OpenEverest: a couple of Helm chart fixes under review",
-    href: "https://github.com/openeverest/helm-charts/pull/100",
+    repo: "KubeStellar",
+    what: "Generalized E2E tests to run against released KubeFlex artifacts",
+    why: "catches regressions in what users actually install, not just source builds",
+    href: "https://github.com/kubestellar/kubeflex/pull/594",
+  },
+  {
+    repo: "Open Cluster Management",
+    what: "Added TLS profile configuration support for spoke cluster agents",
+    why: "lets clusters meet stricter TLS compliance requirements",
+    href: "https://github.com/open-cluster-management-io/ocm/pull/1486",
+  },
+  {
+    repo: "kro",
+    what: "KREP-008: design proposal for resource-backed includeWhen evaluation",
+    why: "unblocks conditional resource composition other proposals were waiting on",
+    href: "https://github.com/kubernetes-sigs/kro/pull/933",
   },
 ];
 ---
@@ -65,92 +75,15 @@ const now = [
   >
     <div class="flex flex-col gap-8 pt-6 lg:flex-row lg:items-start lg:gap-12">
       <div class="min-w-0 flex-1">
-        <section id="projects" class="border-border border-b pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">Projects</h2>
-          <ul>
-            {projects.map(p => (
-              <li class="my-6">
-                <a
-                  href={p.href}
-                  target="_blank"
-                  rel="noopener"
-                  class:list={[
-                    "text-accent inline-block text-lg font-medium",
-                    "decoration-dashed underline-offset-4 hover:underline",
-                    "focus-visible:no-underline focus-visible:underline-offset-0",
-                  ]}
-                >
-                  {p.name}
-                </a>
-                <p class="text-muted-foreground text-sm">{p.tagline}</p>
-                <p class="mt-1">{p.description}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section id="now" class="border-border border-b pt-8 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">
-            Currently working on
-          </h2>
-          <ul class="mt-4 space-y-2">
-            {now.map(n => (
-              <li>
-                <a
-                  href={n.href}
-                  target="_blank"
-                  rel="noopener"
-                  class="text-accent decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline"
-                >
-                  {n.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section
-          id="contributions"
-          class="border-border border-b pt-8 pb-6"
-        >
-          <h2 class="text-2xl font-semibold tracking-wide">
-            Recent contributions
-          </h2>
-          <ul>
-            {highlightedContributions.map(c => (
-              <li class="my-6">
-                <a
-                  href={c.href}
-                  target="_blank"
-                  rel="noopener"
-                  class:list={[
-                    "text-accent inline-block text-lg font-medium",
-                    "decoration-dashed underline-offset-4 hover:underline",
-                    "focus-visible:no-underline focus-visible:underline-offset-0",
-                  ]}
-                >
-                  {c.title}
-                </a>
-                <p class="text-muted-foreground text-sm">{c.project}</p>
-              </li>
-            ))}
-          </ul>
-          <LinkButton
-            href={getRelativeLocaleUrl(locale, "contributions")}
-            class="hover:text-accent underline decoration-dashed underline-offset-4"
-          >
-            See all contributions
-          </LinkButton>
-        </section>
-
+        {
+          // Posts lead the homepage — this site exists mainly for the blog.
+          // Contributions/"now" are secondary, further down.
+        }
         {
           featuredPosts.length > 0 && (
             <section
               id="featured"
-              class:list={[
-                "pt-12 pb-6",
-                { "border-border border-b": recentPosts.length > 0 },
-              ]}
+              class="border-border first:pt-0 last:border-b-0 border-b pt-8 pb-6"
             >
               <h2 class="text-2xl font-semibold tracking-wide">
                 {t.home.featured}
@@ -166,7 +99,10 @@ const now = [
 
         {
           recentPosts.length > 0 && (
-            <section id="recent-posts" class="pt-12 pb-6">
+            <section
+              id="recent-posts"
+              class="border-border first:pt-0 last:border-b-0 border-b pt-8 pb-6"
+            >
               <h2 class="text-2xl font-semibold tracking-wide">
                 {t.home.recentPosts}
               </h2>
@@ -178,6 +114,39 @@ const now = [
             </section>
           )
         }
+
+        <section
+          id="now"
+          class="border-border first:pt-0 last:border-b-0 border-b pt-8 pb-6"
+        >
+          <h2 class="text-2xl font-semibold tracking-wide">Now</h2>
+          <ul>
+            {nowAndRecent.map(item => (
+              <li class="my-6">
+                <p class="text-muted-foreground text-sm">{item.repo}</p>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener"
+                  class:list={[
+                    "text-accent inline-block text-lg font-medium",
+                    "decoration-dashed underline-offset-4 hover:underline",
+                    "focus-visible:no-underline focus-visible:underline-offset-0",
+                  ]}
+                >
+                  {item.what}
+                </a>
+                <p class="mt-1 text-sm italic">{item.why}</p>
+              </li>
+            ))}
+          </ul>
+          <LinkButton
+            href={getRelativeLocaleUrl(locale, "contributions")}
+            class="hover:text-accent underline decoration-dashed underline-offset-4"
+          >
+            See all contributions
+          </LinkButton>
+        </section>
 
         <div class="my-8 text-center">
           <LinkButton href={getRelativeLocaleUrl(locale, "posts")}>
