@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 320" font-family="Georgia, 'Times New Roman', serif">
+  <rect x="0" y="0" width="1400" height="320" fill="#fafafa" />
+
+  <!-- Panel 1: Bug found -->
+  <text x="190" y="34" font-size="26" font-weight="bold" fill="#1a1a1a" text-anchor="middle">Bug found</text>
+  <rect x="50" y="56" width="280" height="150" rx="8" fill="#ffffff" stroke="#e2e2e2" stroke-width="1.5" />
+  <polyline points="140,150 165,105 195,150 225,105 250,150" fill="none" stroke="#a8452c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="190" y="255" font-family="'Courier New', monospace" font-size="17" fill="#6b7280" text-anchor="middle">Selection handler races</text>
+
+  <line x1="335" y1="131" x2="385" y2="131" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow1)" />
+
+  <!-- Panel 2: Fix applied -->
+  <text x="530" y="34" font-size="26" font-weight="bold" fill="#1a1a1a" text-anchor="middle">Fix applied</text>
+  <rect x="390" y="56" width="280" height="150" rx="8" fill="#ffffff" stroke="#e2e2e2" stroke-width="1.5" />
+  <path d="M 480,135 L 515,170 L 585,95" fill="none" stroke="#1f6f4a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="530" y="255" font-family="'Courier New', monospace" font-size="17" fill="#6b7280" text-anchor="middle">Generation counter added</text>
+
+  <line x1="675" y1="131" x2="725" y2="131" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow1)" />
+
+  <!-- Panel 3: Refactor moves code -->
+  <text x="870" y="34" font-size="26" font-weight="bold" fill="#1a1a1a" text-anchor="middle">Refactor moves code</text>
+  <rect x="730" y="56" width="280" height="150" rx="8" fill="#ffffff" stroke="#e2e2e2" stroke-width="1.5" />
+  <path d="M 805,140 L 830,163 L 875,110" fill="none" stroke="#c7c7c7" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 8" />
+  <rect x="915" y="98" width="80" height="80" rx="8" fill="none" stroke="#a8452c" stroke-width="2.5" />
+  <line x1="932" y1="115" x2="978" y2="161" stroke="#a8452c" stroke-width="7" stroke-linecap="round" />
+  <line x1="978" y1="115" x2="932" y2="161" stroke="#a8452c" stroke-width="7" stroke-linecap="round" />
+  <text x="870" y="255" font-family="'Courier New', monospace" font-size="17" fill="#6b7280" text-anchor="middle">Guard left behind</text>
+
+  <line x1="1015" y1="131" x2="1065" y2="131" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow1)" />
+
+  <!-- Panel 4: Bug returns -->
+  <text x="1210" y="34" font-size="26" font-weight="bold" fill="#1a1a1a" text-anchor="middle">Bug returns</text>
+  <rect x="1070" y="56" width="280" height="150" rx="8" fill="#ffffff" stroke="#e2e2e2" stroke-width="1.5" />
+  <polyline points="1160,150 1185,105 1215,150 1245,105 1270,150" fill="none" stroke="#a8452c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="1210" y="255" font-family="'Courier New', monospace" font-size="17" fill="#6b7280" text-anchor="middle">Six days later, re-diagnosed</text>
+
+  <defs>
+    <marker id="arrow1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L7,4 Z" fill="#8a8f98" />
+    </marker>
+  </defs>
+</svg>
