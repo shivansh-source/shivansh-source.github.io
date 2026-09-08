@@ -1,0 +1,42 @@
+---
+// Shows a per-page view count fetched from GoatCounter's public counter
+// endpoint. Renders nothing if features.viewCounter is off.
+import config from "@/config";
+
+const viewCounter = config.features.viewCounter;
+---
+
+{
+  viewCounter && (
+    <span
+      id="read-count"
+      class="text-muted-foreground text-sm"
+      data-goatcounter-code={viewCounter.goatcounterCode}
+    >
+      <span class="sr-only">Loading view count…</span>
+    </span>
+  )
+}
+
+{
+  viewCounter && (
+    <script>
+      document.addEventListener("astro:page-load", () => {
+        const el = document.getElementById("read-count");
+        const code = el?.dataset.goatcounterCode;
+        if (!el || !code) return;
+
+        const path = encodeURIComponent(location.pathname);
+        fetch(`https://${code}.goatcounter.com/counter/${path}.json`)
+          .then(res => (res.ok ? res.json() : null))
+          .then((data: { count?: string } | null) => {
+            if (data?.count) el.textContent = data.count;
+            else el.textContent = "";
+          })
+          .catch(() => {
+            el.textContent = "";
+          });
+      });
+    </script>
+  )
+}

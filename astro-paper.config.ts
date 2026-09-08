@@ -27,6 +27,10 @@ export default defineAstroPaperConfig({
       enabled: false,
     },
     search: "pagefind",
+    // Sign up free at goatcounter.com, then set this to your site code
+    // (from yourcode.goatcounter.com) to turn on view tracking + the
+    // visible read count on post pages. `false` keeps both fully off.
+    viewCounter: { goatcounterCode: "shivansh-source" },
   },
   socials: [
     { name: "github", url: "https://github.com/shivansh-source" },

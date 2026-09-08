@@ -59,6 +59,14 @@ interface FeaturesConfig {
    * Set to false to disable search entirely.
    */
   search?: "pagefind" | false;
+  /**
+   * Per-page view counts, via GoatCounter (goatcounter.com — free for
+   * personal sites, no cookies). Requires a GoatCounter account; set to the
+   * site code from your dashboard URL, e.g. "myblog" for
+   * myblog.goatcounter.com. `false` (default) disables both the tracking
+   * script and the visible count on post pages.
+   */
+  viewCounter?: { goatcounterCode: string } | false;
 }
 
 interface SocialLink {

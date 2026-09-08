@@ -4,6 +4,7 @@ import PostLayout from "@/layouts/PostLayout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Datetime from "@/components/Datetime.astro";
+import ReadCount from "@/components/ReadCount.astro";
 import Tag from "@/components/Tag.astro";
 import { getPostSlug, getPostOgImageUrl } from "@/utils/getPostPaths";
 import { getSortedPosts } from "@/utils/getSortedPosts";
@@ -121,6 +122,16 @@ const ogImage = getPostOgImageUrl(post, Astro.url.origin, locale);
 
     <div class="my-2 flex items-center gap-2">
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
+      {
+        config.features.viewCounter && (
+          <>
+            <span aria-hidden="true" class="text-muted-foreground">
+              |
+            </span>
+            <ReadCount />
+          </>
+        )
+      }
       <span
         aria-hidden="true"
         class:list={[

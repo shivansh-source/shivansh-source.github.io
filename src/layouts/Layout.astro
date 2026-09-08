@@ -112,6 +112,37 @@ const rssHref = getRelativeLocaleUrl(
       })();
     </script>
 
+    {
+      config.features.viewCounter && (
+        <Fragment>
+          <script
+            is:inline
+            data-goatcounter={`https://${config.features.viewCounter.goatcounterCode}.goatcounter.com/count`}
+            data-goatcounter-settings={JSON.stringify({ no_onload: true })}
+            async
+            src="//gc.zgo.at/count.js"
+          />
+          {
+            // GoatCounter's script only auto-fires once on script load, which
+            // misses every subsequent client-side navigation under
+            // ClientRouter — no_onload above disables that, this fires a
+            // count manually on every real page transition instead.
+          }
+          <script>
+            document.addEventListener("astro:page-load", () => {
+              (
+                window as unknown as {
+                  goatcounter?: { count: (opts: { path: string }) => void };
+                }
+              ).goatcounter?.count({
+                path: location.pathname + location.search,
+              });
+            });
+          </script>
+        </Fragment>
+      )
+    }
+
     <ClientRouter />
   </head>
   <body
