@@ -23,15 +23,26 @@ const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 const homePath = getRelativeLocaleUrl(locale, "");
 
+const projects = [
+  {
+    name: "GenSec",
+    tagline: "Go · vulnerability scanning + LLM-driven remediation",
+    href: "https://github.com/shivansh-source/gensec",
+    description:
+      "Scans Go repositories for vulnerabilities (Semgrep, Gitleaks, Trivy, plus a built-in pattern matcher), uses an LLM to triage findings in context, and opens a PR with a generated fix — for teams who want vulnerabilities remediated, not just listed. Early-stage and opinionated; a human still reviews and merges every PR.",
+  },
+  {
+    name: "Ephemeral Credential Broker",
+    tagline: "Go · Kubernetes controller · short-lived credentials",
+    href: "https://github.com/shivansh-source/ephemeral-credential-broker",
+    description:
+      "A Kubernetes controller that replaces long-lived Secrets with short-lived, scope-limited credentials minted on demand — one CRD, a reconciler that mints, rotates, revokes, and cleans up on delete, and a provider interface with one real implementation shipped (GitHub App installation tokens; AWS STS, database credentials, and Vault are specified against the same interface but deliberately not built yet). A portfolio project with an honest threat model, not a pitch to replace Vault.",
+  },
+];
+
 // One curated list, not two overlapping ones — mixes in-progress work with
 // recent merged contributions, same format each time: repo, what, why.
 const nowAndRecent = [
-  {
-    repo: "GenSec",
-    what: "Building an LLM-assisted vulnerability scanner and patcher for Go",
-    why: "closing the gap between finding a vulnerability and actually shipping the fix",
-    href: "https://github.com/shivansh-source/gensec",
-  },
   {
     repo: "OpenEverest",
     what: "Building a curated LLM catalog for the KubeAI provider",
@@ -114,6 +125,33 @@ const nowAndRecent = [
             </section>
           )
         }
+
+        <section
+          id="projects"
+          class="border-border first:pt-0 last:border-b-0 border-b pt-8 pb-6"
+        >
+          <h2 class="text-2xl font-semibold tracking-wide">Projects</h2>
+          <ul>
+            {projects.map(p => (
+              <li class="my-6">
+                <a
+                  href={p.href}
+                  target="_blank"
+                  rel="noopener"
+                  class:list={[
+                    "text-accent inline-block text-lg font-medium",
+                    "decoration-dashed underline-offset-4 hover:underline",
+                    "focus-visible:no-underline focus-visible:underline-offset-0",
+                  ]}
+                >
+                  {p.name}
+                </a>
+                <p class="text-muted-foreground text-sm">{p.tagline}</p>
+                <p class="mt-1">{p.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         <section
           id="now"

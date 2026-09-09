@@ -9,6 +9,8 @@ I'm Shivansh Sinha, a software engineer focused on cloud-native infrastructure �
 
 I contribute across several CNCF-ecosystem projects — OpenEverest, KubeStellar, Open Cluster Management, and kro — mostly bug fixes, CI/infra work, and provider-level features. Full breakdown with links on the [Contributions](/contributions) page.
 
+I also build things on my own — [GenSec](https://github.com/shivansh-source/gensec) (an LLM-assisted vulnerability scanner and patcher for Go) and an [Ephemeral Credential Broker](https://github.com/shivansh-source/ephemeral-credential-broker) (a Kubernetes controller that mints short-lived credentials instead of storing long-lived ones in Secrets). Both are portfolio projects, not startups — the point is demonstrating the pattern cleanly, not selling it.
+
 ## Currently
 
 - Building [GenSec](https://github.com/shivansh-source/gensec), an LLM-assisted vulnerability scanner and patcher for Go — early-stage, a human still reviews and merges every fix it proposes
