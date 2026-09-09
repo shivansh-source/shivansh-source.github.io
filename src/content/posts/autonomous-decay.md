@@ -34,7 +34,11 @@ Nothing got reverted. Nothing got overwritten. The fix just didn't come along fo
 
 Six days later the bug was back. Same symptom, same root cause, new filename. Someone filed a fresh issue and re-derived the same diagnosis from scratch, with no idea the exact bug had already been found and fixed a week earlier. A third agent fixed it again, this time with an AbortController instead of a generation counter. Same bug, diagnosed twice, fixed twice, two different ways, because nothing in the loop remembered the first time.
 
+<div class="wide-diagram">
+
 ![The bug that wouldn't stay fixed: found, fixed, the guard left behind in a refactor, and the bug returning six days later](@/assets/images/autonomous-decay-bug-strip.svg)
+
+</div>
 
 That's thrashing without convergence, and the cause is specific. In a normal codebase a fix is two things at once. It's a change to the code, and it's a piece of memory in the person who made it. The memory is what keeps future changes from breaking the fix. It's why a maintainer refactoring a module remembers "this handler needs its guard" even when nothing in the compiler would stop them from dropping it.
 
@@ -82,7 +86,11 @@ Opacity was about not being able to read the code. There was a second wall right
 
 The project needed a lot of clusters to exercise properly. Run eight or nine of them, which is a normal ask for something that pitches itself as multi-cluster, and no reasonable machine would hold up. This wasn't a hardware problem on my end. The system was unoptimized to the point that the cluster count it demanded couldn't be sustained by anything a normal contributor would own. And we could see how bad it was, precisely because we're the people who know what those numbers should cost. The gap between what it should have taken and what it actually took was enormous.
 
+<div class="wide-diagram">
+
 ![Nine clusters needed for multi-cluster tests; only the first three fit on a laptop, the rest exceed the laptop limit](@/assets/images/autonomous-decay-cluster-limit.svg)
+
+</div>
 
 That sounds like a convenience problem. It isn't. It's load-bearing, because the moment you can't stand up a realistic environment, you can't test a change against reality. You're reviewing code you can't run, trusting the pipeline caught whatever you couldn't. And a pipeline only catches what someone thought to write a check for. Everything else ships.
 
@@ -104,7 +112,11 @@ That's the last stage of the pattern. First the humans stop reading the code. Th
 
 Four failures: thrashing, eviction, opacity, collapse. Line them up and they stop looking like four things.
 
+<div class="wide-diagram">
+
 ![The Progression](@/assets/images/autonomous-decay-progression.svg)
+
+</div>
 
 They're one decision, seen from four angles. The decision was to build a workflow that keeps humans out of the code.
 

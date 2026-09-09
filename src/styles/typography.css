@@ -47,6 +47,22 @@
       @apply border-border mx-auto border;
     }
 
+    /*
+     * Wide diagrams (designed at ~1400-1500px so their embedded text stays
+     * readable) would otherwise shrink to fit a narrow screen along with
+     * everything else, taking their text down to an illegible size on
+     * mobile. Scroll horizontally at native size instead of shrinking.
+     */
+    .wide-diagram {
+      @apply -mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0;
+
+      img {
+        max-width: none;
+        min-width: 700px;
+        width: 100%;
+      }
+    }
+
     img[role="button"] {
       @apply cursor-zoom-in;
 
