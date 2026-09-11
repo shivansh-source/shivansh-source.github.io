@@ -38,6 +38,13 @@ const projects = [
     description:
       "A Kubernetes controller that replaces long-lived Secrets with short-lived, scope-limited credentials minted on demand — one CRD, a reconciler that mints, rotates, revokes, and cleans up on delete, and a provider interface with one real implementation shipped (GitHub App installation tokens; AWS STS, database credentials, and Vault are specified against the same interface but deliberately not built yet). A portfolio project with an honest threat model, not a pitch to replace Vault.",
   },
+  {
+    name: "k8s-hardening-lab",
+    tagline: "Kubernetes · k3d · attack, fix, detect",
+    href: "https://github.com/shivansh-source/k8s-hardening-lab",
+    description:
+      "A local k3d lab that proves four attack paths out of one compromised container — root, a mounted token that reads every secret, lateral movement, open egress — then closes each with a specific control and re-runs the attack to show the difference. Ends with API audit logging turned on and two written detections (exec into a pod, secret enumeration from a ServiceAccount), so the same moves are alertable when a fix fails.",
+  },
 ];
 
 // One curated list, not two overlapping ones — mixes in-progress work with
